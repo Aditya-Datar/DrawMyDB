@@ -1,0 +1,165 @@
+erDiagram
+
+    Entity {
+        PROFESSOR {
+            PROF_NUM (PK)
+            PROF_SPECIALTY
+            PROF_RANK
+            PROF_LNAME
+            PROF_FNAME
+            PROF_INITIAL
+            PROF_EMAIL 
+        } 
+
+
+        STUDENT {
+            STU_NUM (PK)
+            DEPT_CODE
+            STU_LNAME
+            STU_FNAME
+            STU_INITIAL
+            STU_EMAIL
+            ADVISOR_PROF_NUM
+        }  
+
+
+        SECTION {
+            SEC_CODE (PK)
+            SEC_NUMBER
+            SEC_TIME 
+            CRS_CODE (FK → COURSE.CRS_CODE)
+            PROF_NUM (FK → PROFESSOR.PROF_NUM)
+            ROOM_CODE (FK → ROOM.ROOM_CODE)
+        }  
+
+
+        ENROLL {
+            STU_NUM (PK)
+            SEC_CODE (FK → SECTION.SEC_CODE)
+            ENROLL_DATE
+            ENROLL_GRADE 
+        }
+
+
+        LIBRARY {
+            LIB_ID (PK) 
+            LIB_NAME
+            LIB_LOCATION
+        }   
+
+
+
+        BOOK {
+            BOOK_ID (PK) 
+            TITLE
+            AUTHOR
+            ISBN
+            STATUS
+            LIB_ID (FK → LIBRARY.LIB_ID)
+        }  
+
+
+        DORMITORY {
+            DORM_ID (PK)
+            DORM_NAME
+            DORM_LOCATION
+            CAPACITY 
+        }   
+
+
+
+        CAFETERIA {
+            CAFE_ID (PK) 
+            CAFE_NAME
+            MENU_TYPE
+            LOCATION
+            BLDG_CODE (FK → BUILDING.BLDG_CODE) 
+        }  
+
+
+        STAFF {
+            STAFF_ID (PK)
+            STAFF_NAME
+            STAFF_ROLE
+            STAFF_EMAIL
+            DEPT_CODE (FK → DEPARTMENT.DEPT_CODE)
+            CAFE_ID (FK → CAFETERIA.CAFE_ID) 
+        }  
+
+
+        EVENT {
+            EVENT_ID (PK)
+            EVENT_NAME
+            EVENT_DATE
+            EVENT_TYPE
+            BLDG_CODE (FK → BUILDING.BLDG_CODE)
+            ORG_DEPT_CODE (FK → DEPARTMENT.DEPT_CODE) 
+        }    
+
+
+
+     SCHOOL {
+        SCHOOL_CODE (PK)
+        SCHOOL_NAME
+        DEAN_PROF_NUM (FK → PROFESSOR.PROF_NUM) 
+    }
+
+
+
+    DEPARTMENT {
+        DEPT_CODE (PK) 
+        DEPT_NAME
+        SCHOOL_CODE (FK → SCHOOL.SCHOOL_CODE) 
+        CHAIR_PROF_NUM (FK → PROFESSOR.PROF_NUM)   
+    }  
+
+     ROOM {
+       ROOM_CODE (PK)
+       ROOM_TYPE 
+       BLDG_CODE (FK → BUILDING.BLDG_CODE) 
+
+    }
+
+
+      BUILDING {
+        BLDG_CODE (PK) 
+        BLDG_NAME
+        BLDG_LOCATION 
+    }  
+
+    COURSE {
+        CRS_CODE (PK)
+        CRS_TITLE 
+        CRS_DESCRIPTION
+        CRS_CREDIT
+        DEPT_CODE (FK → DEPARTMENT.DEPT_CODE) 
+    }  
+
+    PROFESSOR -- PK: PROF_NUM --> STUDENT
+    PROFESSOR -- PK: PROF_NUM --> SECTION
+    PROFESSOR -- PK: PROF_NUM --> DEPARTMENT
+    PROFESSOR -- FK: PROF_NUM --> SCHOOL
+    SCHOOL -- FK: SCHOOL_CODE --> DEPARTMENT
+    DEPARTMENT -- FK: DEPT_CODE --> PROFESSOR
+    PROFESSOR -- PK: PROF_NUM --> COURSE
+    COURSE -- FK: CRS_CODE --> SECTION
+    SECTION -- PK: SEC_CODE --> ROOM
+    ROOM -- FK: ROOM_CODE --> BUILDING
+    BUILDING -- FK: BLDG_CODE --> LIBRARY
+    LIBRARY -- FK: LIB_ID --> BOOK
+    STUDENT -- PK: STU_NUM --> ENROLL
+    ENROLL -- PK: ENROLL_DATE --> SECTION
+    SECTION -- FK: SEC_CODE --> ROOM
+    ROOM -- FK: ROOM_CODE --> BUILDING 
+    BUILDING -- FK: BLDG_CODE --> STAFF
+    STAFF -- FK: STAFF_ID --> DEPT_CODE
+    STUDENT -- FK: STU_NUM --> ADVISOR_PROF_NUM
+    PROFESSOR -- PK: PROF_NUM --> LIBRARY
+    STUDENT -- FK: STU_NUM --> BOOK
+    BOOK -- FK: LIB_ID --> LIBRARY
+    LIBRARY -- FK: LIB_ID --> STUDENT
+    DORMITORY -- PK: DORM_ID --> STUDENT
+    CAFETERIA -- FK: CAFE_ID --> STAFF
+    EVENT -- PK: EVENT_ID --> STAFF
+    EVENT -- FK: EVENT_NAME --> DEPT_CODE
+}

@@ -1,0 +1,143 @@
+erDiagram
+CLASSIFIER {
+  PROFESSOR "advises" |->{0..*} STUDENT
+  PROFESSOR "teaches" |->{1} SECTION
+  PROFESSOR "chairs" |->{1} DEPARTMENT
+  PROFESSOR "is employed by" |->{1} SCHOOL
+  SCHOOL "operates" |->{1} DEPARTMENT
+  DEPARTMENT "employs" |->{1} PROFESSOR
+  DEPARTMENT "offers" |->{0..*} COURSE
+  COURSE "generates" |->{1} SECTION
+  STUDENT "enrolls in" |->{1} SECTION via ENROLL
+  SECTION "is written in" |->{1} ENROLL
+  SECTION "is held in" |->{1} ROOM
+  ROOM "is found in" |->{1} BUILDING
+  BUILDING "contains" |->{1} ROOM
+  LIBRARY "manages" |->{0..*} BOOK
+  STUDENT "borrows" |->{0..*} BOOK
+  PROFESSOR "uses" |->{1} LIBRARY
+  STUDENT "lives in" |->{1} DORMITORY
+  CAFETERIA "serves" |->{1} STUDENT
+  CAFETERIA "employs" |->{1} STAFF
+  STAFF "works in" |->{1} DEPARTMENT
+  EVENT "attended by" |->{0..*} STUDENT
+  EVENT "attended by" |->{0..*} PROFESSOR
+  EVENT "organized by" |->{1} DEPARTMENT
+  EVENT "hosted in" |->{1} BUILDING
+
+class PROFESSOR {
+  PROF_NUM PK
+  PROF_SPECIALTY
+  PROF_RANK
+  PROF_LNAME
+  PROF_FNAME
+  PROF_INITIAL
+  PROF_EMAIL
+}
+
+class SCHOOL {
+  SCHOOL_CODE PK
+  SCHOOL_NAME
+  DEAN_PROF_NUM FK
+}
+
+class DEPARTMENT {
+  DEPT_CODE PK
+  DEPT_NAME
+  SCHOOL_CODE FK
+  CHAIR_PROF_NUM FK
+}
+
+class COURSE {
+  CRS_CODE PK
+  CRS_TITLE
+  CRS_DESCRIPTION
+  CRS_CREDIT
+  DEPT_CODE FK
+}
+
+class SECTION {
+  SEC_CODE PK
+  SEC_NUMBER
+  SEC_TIME
+  CRS_CODE FK
+  PROF_NUM FK
+  ROOM_CODE FK
+}
+
+class STUDENT {
+  STU_NUM PK
+  DEPT_CODE FK
+  STU_LNAME
+  STU_FNAME
+  STU_INITIAL
+  STU_EMAIL
+  ADVISOR_PROF_NUM FK
+}
+
+class ENROLL {
+  STU_NUM FK
+  SEC_CODE FK
+  ENROLL_DATE
+  ENROLL_GRADE
+}
+
+class ROOM {
+  ROOM_CODE PK
+  ROOM_TYPE
+  BLDG_CODE FK
+}
+
+class BUILDING {
+  BLDG_CODE PK
+  BLDG_NAME
+  BLDG_LOCATION
+}
+
+class LIBRARY {
+  LIB_ID PK
+  LIB_NAME
+  LIB_LOCATION
+}
+
+class BOOK {
+  BOOK_ID PK
+  TITLE
+  AUTHOR
+  ISBN
+  STATUS
+  LIB_ID FK
+}
+
+class DORMITORY {
+  DORM_ID PK
+  DORM_NAME
+  DORM_LOCATION
+  CAPACITY
+}
+
+class CAFETERIA {
+  CAFE_ID PK
+  CAFE_NAME
+  MENU_TYPE
+  LOCATION
+  BLDG_CODE FK
+}
+
+class STAFF {
+  STAFF_ID PK
+  STAFF_NAME
+  STAFF_ROLE
+  STAFF_EMAIL
+  DEPT_CODE FK
+  CAFE_ID FK
+}
+
+class EVENT {
+  EVENT_ID PK
+  EVENT_NAME
+  EVENT_DATE
+  EVENT_TYPE
+  BLDG_CODE FK
+  ORG_DEPT_CODE FK
+}
