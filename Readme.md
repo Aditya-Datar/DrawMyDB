@@ -1,4 +1,4 @@
-# 📘 Small College ER Diagram with LLMs
+# DrawMyDB
 
 This project demonstrates how Large Language Models (LLMs) can be used to generate an **Entity-Relationship (ER) Diagram** for the core operations of a small college.  
 Instead of manually designing the ER diagram, we prompted LLMs (Llama3 and Gemma2) locally using Ollama to create entities, attributes, and relationships in **Mermaid format**, and then rendered the diagram.
